@@ -44,6 +44,7 @@ public class PhotoThrower : MonoBehaviour
         GameObject PhotoToThrow = photosList[0];
         photosList.Remove(PhotoToThrow);
         
+        
         foreach (GameObject photo in photosList)
         {
             photo.transform.DOMoveX(photo.transform.position.z-notThrowedPhotoOffsetX, 0.5f).OnComplete(() =>
@@ -64,7 +65,6 @@ public class PhotoThrower : MonoBehaviour
         yield return new WaitForSeconds(throwDuration / 3f);
         photoToThrow.transform.DOShakeRotation(throwDuration*2/3,90,2,90,true).SetEase(Ease.Linear);
     }
-
     public void MovePhoto( GameObject photoToThrow)
     {
         photoToThrow.transform.DOMove(firePlace.transform.position,throwDuration).SetEase(Ease.Linear);
