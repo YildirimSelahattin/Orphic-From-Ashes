@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Shootable
   - CinemachineTarget
+  - InspectObject
   layers:
   - Default
   - TransparentFX
@@ -13,12 +14,12 @@ TagManager:
   - 
   - Water
   - UI
-  - photos
+  - 
   - 
   - Lighting
   - Ground
   - Postprocessing
-  - 
+  - InspectLayer
   - 
   - 
   - 
