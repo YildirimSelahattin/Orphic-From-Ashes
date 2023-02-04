@@ -11,7 +11,6 @@ public class PhotoMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ShowAllPhotos();
     }
 
     // Update is called once per frame
