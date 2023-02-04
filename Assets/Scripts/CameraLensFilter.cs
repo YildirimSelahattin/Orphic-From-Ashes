@@ -13,12 +13,9 @@ public class CameraLensFilter : MonoBehaviour
        filter = gameObject.GetComponent<Image>();
    }
 
-    public void Update()
+    public void DarkenScreen()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            trc += 0.15f;
-            filter.color = new Color(0,0,0,trc);
-        }
+        trc += 0.15f;
+        filter.color = new Color(0, 0, 0, trc);
     }
 }
