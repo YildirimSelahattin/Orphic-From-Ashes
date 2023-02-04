@@ -13,6 +13,7 @@ public class InspectObjectController : MonoBehaviour
     private bool onInspect = false;
     private GameObject inspected;
     public FirstPersonController _fpsController;
+    public CameraLensFilter cameraLensFilterScript;
     public LayerMask InspectLayer;
     public GameObject inspectText;
     public GameObject inspectOutText;
@@ -20,7 +21,13 @@ public class InspectObjectController : MonoBehaviour
     public GameObject[] dialogBoxes;
     public AudioSource _AudioSource;
     public AudioClip _aaaaaa;
-
+    public int[] photoMaxHintArray = new int[] { 0, 5, 5, 5 };
+    public int currentMaxHint;
+    public int currentFindedHit=0;
+    private void Start()
+    {
+        currentMaxHint = photoMaxHintArray[GameManager.Instance.gameStage];
+    }
     public void Update()
     {
         Vector3 _fwd = cam.transform.TransformDirection(
@@ -76,6 +83,9 @@ public class InspectObjectController : MonoBehaviour
                     if (temp == 0)
                     {
                         //arttır
+                        currentFindedHit++;
+                        FireManager.Instance.ChangeFireAmount(currentFindedHit/currentMaxHint);
+                        cameraLensFilterScript.DarkenScreen();
                         PlayerPrefs.SetInt(itemName, 0);
                     }
 
