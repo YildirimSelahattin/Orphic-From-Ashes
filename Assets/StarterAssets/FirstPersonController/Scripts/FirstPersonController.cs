@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -73,6 +75,10 @@ namespace StarterAssets
 
 		private const float _threshold = 0.01f;
 
+		public AudioSource _AudioSource;
+		public AudioClip _AudioClip;
+		bool isWalking = false;
+		
 		private void Awake()
 		{
 			// get a reference to our main camera
@@ -90,6 +96,16 @@ namespace StarterAssets
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
+			StartCoroutine(FootStep());
+			
+		}
+
+		IEnumerator FootStep()
+		{
+			isWalking = true;
+			yield return new WaitForSeconds(0.5f);
+			isWalking = false;
+			StartCoroutine(FootStep());
 		}
 
 		private void Update()
@@ -97,6 +113,12 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+
+			if (Input.GetKey(KeyCode.W) && isWalking == true)
+			{
+				_AudioSource.PlayOneShot(_AudioClip);
+				isWalking = false;
+			}
 		}
 
 		private void LateUpdate()

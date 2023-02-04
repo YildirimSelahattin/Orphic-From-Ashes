@@ -18,11 +18,10 @@ public class InspectObjectController : MonoBehaviour
     public GameObject inspectOutText;
     public Camera cam;
     public GameObject[] dialogBoxes;
+    public AudioSource _AudioSource;
+    public AudioClip _aaaaaa;
 
-    public
-
-        // Update is called once per frame
-        void Update()
+    public void Update()
     {
         Vector3 _fwd = cam.transform.TransformDirection(
             Vector3.forward);
@@ -38,6 +37,7 @@ public class InspectObjectController : MonoBehaviour
                     inspected = _hit.transform.gameObject;
                     originalPos = _hit.transform.position;
                     onInspect = true;
+
                     string itemName = _hit.transform.name;
 
                     switch (itemName)
@@ -67,15 +67,20 @@ public class InspectObjectController : MonoBehaviour
                         case "pasta":
                             break;
                         case "kapi":
+                            _AudioSource.PlayOneShot(_aaaaaa);
+                            onInspect = false;
                             break;
                     }
+
                     int temp = PlayerPrefs.GetInt(itemName, 0);
                     if (temp == 0)
                     {
                         //arttır
                         PlayerPrefs.SetInt(itemName, 0);
                     }
-                    StartCoroutine(PickupItem());
+
+                    if (!_hit.transform.name.Equals("kapi"))
+                        StartCoroutine(PickupItem());
                 }
             }
         }
