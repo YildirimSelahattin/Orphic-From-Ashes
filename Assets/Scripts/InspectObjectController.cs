@@ -17,9 +17,12 @@ public class InspectObjectController : MonoBehaviour
     public GameObject inspectText;
     public GameObject inspectOutText;
     public Camera cam;
-    
-    // Update is called once per frame
-    void Update()
+    public GameObject[] dialogBoxes;
+
+    public
+
+        // Update is called once per frame
+        void Update()
     {
         Vector3 _fwd = cam.transform.TransformDirection(
             Vector3.forward);
@@ -35,6 +38,43 @@ public class InspectObjectController : MonoBehaviour
                     inspected = _hit.transform.gameObject;
                     originalPos = _hit.transform.position;
                     onInspect = true;
+                    string itemName = _hit.transform.name;
+
+                    switch (itemName)
+                    {
+                        case "cat":
+                            dialogBoxes[0].SetActive(true);
+                            break;
+                        case "tren":
+                            dialogBoxes[1].SetActive(true);
+                            break;
+                        case "mum":
+                            break;
+                        case "ayi":
+                            break;
+                        case "mektup":
+                            break;
+                        case "kartpostal":
+                            break;
+                        case "takvim0":
+                            break;
+                        case "takvim1":
+                            break;
+                        case "takvim2":
+                            break;
+                        case "telefon":
+                            break;
+                        case "pasta":
+                            break;
+                        case "kapi":
+                            break;
+                    }
+                    int temp = PlayerPrefs.GetInt(itemName, 0);
+                    if (temp == 0)
+                    {
+                        //arttır
+                        PlayerPrefs.SetInt(itemName, 0);
+                    }
                     StartCoroutine(PickupItem());
                 }
             }
@@ -43,14 +83,14 @@ public class InspectObjectController : MonoBehaviour
         {
             inspectText.SetActive(false);
         }
-        
+
         if (onInspect)
         {
             inspected.transform.position = Vector3.Lerp(inspected.transform.position, inspectArea.position, 0.2f);
             inspectArea.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) *
                                Time.deltaTime * 125f);
         }
-        else if(inspected != null)
+        else if (inspected != null)
         {
             inspected.transform.SetParent(null);
             inspected.transform.position = Vector3.Lerp(inspected.transform.position, originalPos, 0.2f);

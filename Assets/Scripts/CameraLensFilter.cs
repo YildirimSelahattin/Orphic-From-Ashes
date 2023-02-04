@@ -17,7 +17,7 @@ public class CameraLensFilter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            trc += 0.1f;
+            trc += 0.15f;
             filter.color = new Color(0,0,0,trc);
         }
     }
