@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class FireManager : MonoBehaviour
 {
-    public int fireLevel;
     public float minParticleSize;
     public float maxParticleSize;
     public GameObject[] flameParent;
@@ -30,35 +29,11 @@ public class FireManager : MonoBehaviour
     }
     public void ChangeFireAmount(float percentage)
     {
-        if (percentage>=0.66)
+        foreach (GameObject particle in flameParent)
         {
-            float difference = percentage - 0.66f;
-            foreach (GameObject particle in flameParent)
-            {
-                var main = particle.GetComponent<ParticleSystem>().main;
-                main.startSize = difference * minMaxDistance / 0.33f;
-            }
-        }
-        else if (percentage >= 33)
-        {
-            //medium fire
-            float difference = percentage - 0.66f;
-            foreach (GameObject particle in flameParent)
-            {
-                var main = particle.GetComponent<ParticleSystem>().main;
-                main.startSize = difference * minMaxDistance / 0.33f;
-            }
-        }
-        
-        else if (percentage >= 0)
-        {
-            //big fire
-            float difference = percentage - 0.66f;
-            foreach (GameObject particle in flameParent)
-            {
-                var main = particle.GetComponent<ParticleSystem>().main;
-                main.startSize = difference * minMaxDistance / 0.33f;
-            }
+            ParticleSystem instance = particle.GetComponent<ParticleSystem>();
+            var main = instance.main;
+            main.startSize = minMaxDistance * percentage;
         }
     }
     public void ControlStartSize()

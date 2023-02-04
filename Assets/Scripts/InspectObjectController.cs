@@ -18,7 +18,13 @@ public class InspectObjectController : MonoBehaviour
     public GameObject inspectOutText;
     public Camera cam;
     public GameObject[] dialogBoxes;
+    public int[] photoMaxHintArray = new int[]{0,5,5,5};
+    public int currentMaxHint;
 
+    private void Start()
+    {
+        currentMaxHint = photoMaxHintArray[GameManager.Instance.gameStage];
+    }
     public
 
         // Update is called once per frame

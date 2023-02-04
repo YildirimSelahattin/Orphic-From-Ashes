@@ -36,25 +36,24 @@ public class PhotoThrower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(photosStage < 2)
+        
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Input.GetButtonDown("Fire1"))//if player 
+            if (photosStage < 2)
             {
-                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, touchableLayerOnlyPhotos)) // if it hit to a machine object
-                {
-                    if(photosStage == 0)
-                    {
-                        SeperatePhotos();
-                    }
-                    if (photosStage == 1)
-                    {
-                        ThrowPhoto();
-                    }
-                    photosStage++;
-                }
+                        if (photosStage == 0)
+                        {
+                            SeperatePhotos();
+                        }
+                        if (photosStage == 1)
+                        {
+                            ThrowPhoto();
+                   }
+                  photosStage++;
             }
         }
+            
+        
     
     }
 

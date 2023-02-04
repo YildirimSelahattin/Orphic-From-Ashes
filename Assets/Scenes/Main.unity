@@ -924,8 +924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a838101d214b4b4397c52d00d15e8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireLevel: 0
-  minParticleSize: 0
+  minParticleSize: 3
   maxParticleSize: 0
   flameParent:
   - {fileID: 1809198882}
