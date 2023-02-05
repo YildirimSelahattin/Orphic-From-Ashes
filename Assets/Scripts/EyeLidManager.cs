@@ -33,7 +33,7 @@ public class EyeLidManager : MonoBehaviour
         DownLid.GetComponent<Image>().DOFade(0,2f).SetEase(Ease.Linear);
         DownLid.transform.DOLocalMoveY(-810, 2F).OnComplete(() =>
         {
-            StartCoroutine(EyeCloseMove());
+            //StartCoroutine(EyeCloseMove());
         });
     }
 
