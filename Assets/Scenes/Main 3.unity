@@ -9501,7 +9501,7 @@ PrefabInstance:
     - target: {fileID: 7094977340117587385, guid: ba424c24e48006449b5f6463f61fc0a6,
         type: 3}
       propertyPath: photoMaxHintArray.Array.data[3]
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9003681563580192369, guid: ba424c24e48006449b5f6463f61fc0a6,
         type: 3}
