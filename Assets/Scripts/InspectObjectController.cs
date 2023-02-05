@@ -21,12 +21,15 @@ public class InspectObjectController : MonoBehaviour
     public GameObject[] dialogBoxes;
     public AudioSource _AudioSource;
     public AudioClip _aaaaaa;
+    public AudioClip _cry;
     public int[] photoMaxHintArray = new int[] { 0, 5, 5, 5 };
-    public int currentMaxHint;
-    public int currentFindedHit=0;
+    public int[] photocrytArray = new int[] { 0, 5, 5, 5 };
+    public float currentMaxHint;
+    public float currentFindedHit=0;
     private Quaternion _itemOriginalPos;
     public GameObject firstText;
     public EyeLidManager eyeLidManager;
+    
     private void Start()
     {
         currentMaxHint = photoMaxHintArray[GameManager.Instance.gameStage];
@@ -99,6 +102,7 @@ public class InspectObjectController : MonoBehaviour
                             dialogBoxes[7].SetActive(true);
 
                             _AudioSource.PlayOneShot(_aaaaaa);
+                            _AudioSource.PlayOneShot(_cry);
                             onInspect = false;
                             break;
                         case "kapi":
@@ -121,10 +125,13 @@ public class InspectObjectController : MonoBehaviour
 
                         cameraLensFilterScript.DarkenScreen();
                         PlayerPrefs.SetInt(itemName, 1);
-                        StartCoroutine(GoToMain());
+                        if (currentFindedHit == currentMaxHint)
+                        {
+                            StartCoroutine(GoToMain());
+                        }
                     }
 
-                    if (!_hit.transform.name.Equals("kapi"))
+                    if (onInspect == true)
                         StartCoroutine(PickupItem());
                 }
             }
@@ -154,6 +161,7 @@ public class InspectObjectController : MonoBehaviour
 
         IEnumerator PickupItem()
         {
+            Debug.Log("giedim");
             _fpsController.enabled = false;
             yield return new WaitForSeconds(0.2f);
             inspected.transform.SetParent(inspectArea);

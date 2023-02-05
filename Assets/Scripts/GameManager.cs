@@ -8,29 +8,18 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     public int gameStage =1;
     public static GameManager Instance;
-    public GameObject[] dialogs;
-    public GameObject LastPanel;
+
     void Awake()
     {
-
+        Cursor.lockState = CursorLockMode.Locked;
         if(Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(this); ;
         }
-        if (gameStage == 4)
-        {
-            LastPanel.SetActive(true);
-        }
-        
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void GoToNextScene()
     {
         Debug.Log(gameStage);
@@ -40,6 +29,7 @@ public class GameManager : MonoBehaviour
     public void GoMainScene()
     {
         Debug.Log(gameStage);
-        SceneManager.LoadScene(gameStage);
+        gameStage++;
+        SceneManager.LoadScene(0);
     }
 }

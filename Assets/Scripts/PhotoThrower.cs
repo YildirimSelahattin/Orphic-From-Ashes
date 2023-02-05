@@ -10,7 +10,7 @@ public class PhotoThrower : MonoBehaviour
     int currentThrowPhotoIndex = 0;
     [SerializeField] Transform firePlace;
     public static PhotoThrower Instance;
-    public  GameObject photoParent;
+    public GameObject photoParent;
     [SerializeField] float notThrowedPhotoOffsetX = 3;
     [SerializeField] LayerMask touchableLayerOnlyPhotos;
     [SerializeField] float throwDuration;
@@ -19,90 +19,107 @@ public class PhotoThrower : MonoBehaviour
     RaycastHit hit;
     Ray ray;
     int photosStage = 0;
-    
+
     void Start()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
-        photoParent = gameStagePhotoParents[GameManager.Instance.gameStage];
-        photoParent.SetActive(true);
-        GameManager.Instance.gameStage++;
-        //Show only wanted photos
-        
 
+        if (GameManager.Instance.gameStage < 4)
+        {
+            photoParent = gameStagePhotoParents[GameManager.Instance.gameStage];
+            photoParent.SetActive(true);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.E))
+        if (GameManager.Instance.gameStage < 4)
         {
-            if (photosStage < 2)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                        if (photosStage == 0)
-                        {
-                            SeperatePhotos();
-                        }
-                        if (photosStage == 1)
-                        {
-                            ThrowPhoto();
-                   }
-                  photosStage++;
+                if (photosStage < 2)
+                {
+                    if (photosStage == 0)
+                    {
+                        SeperatePhotos();
+                    }
+
+                    if (photosStage == 1)
+                    {
+                        ThrowPhoto();
+                    }
+
+                    photosStage++;
+                }
             }
         }
-            
-        
-    
     }
 
     public void ThrowPhoto()
     {
         GameObject PhotoToThrow = photoParent.transform.GetChild(0).gameObject;
-        
-        
-        
-        for(int i= 1; i < photoParent.transform.childCount; i++)
+
+
+        if (GameManager.Instance.gameStage == 3)
         {
-            GameObject photo = photoParent.transform.GetChild(i).gameObject;
-            photo.transform.DOLocalMoveX(photo.transform.position.z - notThrowedPhotoOffsetX, 0.5f).OnComplete(() =>
+            for (int i = 0; i < photoParent.transform.childCount; i++)
             {
-                PhotoToThrow.transform.DOLocalRotate(throwingPhotoFirstRotation, 0.2f).OnComplete(() =>
+                GameObject photo = photoParent.transform.GetChild(i).gameObject;
+                photo.transform.DOLocalMoveX(photo.transform.position.z - notThrowedPhotoOffsetX, 0.5f).OnComplete(() =>
                 {
-                    StartCoroutine(RotatePhoto(PhotoToThrow));
-                    MovePhoto(PhotoToThrow);
-                    currentThrowPhotoIndex++;
+                    PhotoToThrow.transform.DOLocalRotate(throwingPhotoFirstRotation, 0.2f).OnComplete(() =>
+                    {
+                        StartCoroutine(RotatePhoto(PhotoToThrow));
+                        MovePhoto(PhotoToThrow);
+                        currentThrowPhotoIndex++;
+                    });
                 });
-            });
+            }
+        }
+        else
+        {
+            for (int i = 1; i < photoParent.transform.childCount; i++)
+            {
+                GameObject photo = photoParent.transform.GetChild(i).gameObject;
+                photo.transform.DOLocalMoveX(photo.transform.position.z - notThrowedPhotoOffsetX, 0.5f).OnComplete(() =>
+                {
+                    PhotoToThrow.transform.DOLocalRotate(throwingPhotoFirstRotation, 0.2f).OnComplete(() =>
+                    {
+                        StartCoroutine(RotatePhoto(PhotoToThrow));
+                        MovePhoto(PhotoToThrow);
+                        currentThrowPhotoIndex++;
+                    });
+                });
+            }
         }
     }
 
     public IEnumerator RotatePhoto(GameObject photoToThrow)
     {
         yield return new WaitForSeconds(throwDuration / 3f);
-        photoToThrow.transform.DOShakeRotation(throwDuration*2/3,90,2,90,true).SetEase(Ease.Linear);
+        photoToThrow.transform.DOShakeRotation(throwDuration * 2 / 3, 90, 2, 90, true).SetEase(Ease.Linear);
     }
-    public void MovePhoto( GameObject photoToThrow)
+
+    public void MovePhoto(GameObject photoToThrow)
     {
         photoToThrow.transform.DOMove(firePlace.transform.position, throwDuration).OnComplete(() =>
         {
             Debug.Log("as");
             GoToTheNextLevel();
         });
-
     }
 
     public void GoToTheNextLevel()
     {
-
         GameManager.Instance.GoToNextScene();
     }
-    
+
     public void SeperatePhotos()
     {
-        
         for (int i = 0; i < photoParent.transform.childCount; i++)
         {
             GameObject photo = photoParent.transform.GetChild(i).gameObject;

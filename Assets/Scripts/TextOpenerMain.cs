@@ -5,10 +5,19 @@ using UnityEngine;
 public class TextOpenerMain : MonoBehaviour
 {
     public GameObject[] dialogs;
-    // Start is called before the first frame update
+    public GameObject LastPanel;
+    public AudioSource AudioSource;
+    public AudioClip c;
+    
     void Start()
     {
-        dialogs[GameManager.Instance.gameStage].SetActive(true);
+        if(GameManager.Instance.gameStage < 4)
+            dialogs[GameManager.Instance.gameStage].SetActive(true);
+        else
+        {
+            LastPanel.SetActive(true);
+            AudioSource.PlayOneShot(c);
+        }
     }
 
     // Update is called once per frame

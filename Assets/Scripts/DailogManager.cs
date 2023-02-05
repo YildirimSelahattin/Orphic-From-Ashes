@@ -60,7 +60,10 @@ public class DailogManager : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
-            eBasText.SetActive(true);
+            if (eBasText != null)
+            {
+                eBasText.SetActive(true);
+            }
         }
     }
 }
