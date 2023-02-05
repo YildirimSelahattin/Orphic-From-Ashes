@@ -24,6 +24,8 @@ public class InspectObjectController : MonoBehaviour
     public int[] photoMaxHintArray = new int[] { 0, 5, 5, 5 };
     public int currentMaxHint;
     public int currentFindedHit=0;
+    private Quaternion _itemOriginalPos;
+    
     private void Start()
     {
         currentMaxHint = photoMaxHintArray[GameManager.Instance.gameStage];
@@ -47,6 +49,8 @@ public class InspectObjectController : MonoBehaviour
 
                     string itemName = _hit.transform.name;
 
+                    _itemOriginalPos = _hit.transform.rotation;
+                    
                     switch (itemName)
                     {
                         case "cat":
@@ -86,7 +90,7 @@ public class InspectObjectController : MonoBehaviour
                         currentFindedHit++;
                         FireManager.Instance.ChangeFireAmount(currentFindedHit/currentMaxHint);
                         cameraLensFilterScript.DarkenScreen();
-                        PlayerPrefs.SetInt(itemName, 0);
+                        PlayerPrefs.SetInt(itemName, 1);
                     }
 
                     if (!_hit.transform.name.Equals("kapi"))
@@ -128,7 +132,7 @@ public class InspectObjectController : MonoBehaviour
 
         IEnumerator DropItem()
         {
-            inspected.transform.rotation = Quaternion.identity;
+            inspected.transform.rotation = _itemOriginalPos;
             yield return new WaitForSeconds(0.2f);
             _fpsController.enabled = true;
             inspectOutText.SetActive(false);
