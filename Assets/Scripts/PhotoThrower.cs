@@ -19,6 +19,7 @@ public class PhotoThrower : MonoBehaviour
     RaycastHit hit;
     Ray ray;
     int photosStage = 0;
+    
     void Start()
     {
         if(Instance == null)
@@ -66,7 +67,7 @@ public class PhotoThrower : MonoBehaviour
         for(int i= 1; i < photoParent.transform.childCount; i++)
         {
             GameObject photo = photoParent.transform.GetChild(i).gameObject;
-            photo.transform.DOMoveX(photo.transform.position.z - notThrowedPhotoOffsetX, 0.5f).OnComplete(() =>
+            photo.transform.DOLocalMoveX(photo.transform.position.z - notThrowedPhotoOffsetX, 0.5f).OnComplete(() =>
             {
                 PhotoToThrow.transform.DOLocalRotate(throwingPhotoFirstRotation, 0.2f).OnComplete(() =>
                 {
