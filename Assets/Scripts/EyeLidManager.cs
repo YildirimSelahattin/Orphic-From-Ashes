@@ -37,17 +37,14 @@ public class EyeLidManager : MonoBehaviour
         });
     }
 
-   public IEnumerator EyeCloseMove()
+   public void EyeCloseMove()
     {
-        yield return new WaitForSeconds(timeBetweenOpenClose);
         blurred.GetComponent<Image>().DOFade(1, 2.2F);
         UpLid.transform.DOLocalMoveY(270, 2f);
         UpLid.GetComponent<Image>().DOFade(1, 2f).SetEase(Ease.Linear);
-        yield return new WaitForSeconds(0.2f);
         DownLid.GetComponent<Image>().DOFade(1, 2f).SetEase(Ease.Linear);
-        DownLid.transform.DOLocalMoveY(-270, 2F).OnComplete(() =>
-        {
-            StartCoroutine(EyeOpenMove(closedDuration));
-        });
+        DownLid.transform.DOLocalMoveY(-270, 2F).OnComplete(()=> GameManager.Instance.GoMainScene());
+        
+        
     }
 }

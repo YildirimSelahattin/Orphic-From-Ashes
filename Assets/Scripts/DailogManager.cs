@@ -11,7 +11,7 @@ public class DailogManager : MonoBehaviour
     public string[] lines;
     public float textSpeed;
     private int index;
-
+    public GameObject eBasText;
     private void Start()
     {
         _textComponent.text = string.Empty;
@@ -60,6 +60,7 @@ public class DailogManager : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+            eBasText.SetActive(true);
         }
     }
 }
