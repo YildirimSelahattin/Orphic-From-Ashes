@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int gameStage =1;
     public static GameManager Instance;
     public GameObject[] dialogs;
+    public GameObject LastPanel;
     void Awake()
     {
 
@@ -16,6 +17,10 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this); ;
+        }
+        if (gameStage == 4)
+        {
+            LastPanel.SetActive(true);
         }
         
         
