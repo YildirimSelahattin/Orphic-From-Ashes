@@ -25,7 +25,8 @@ public class InspectObjectController : MonoBehaviour
     public int currentMaxHint;
     public int currentFindedHit=0;
     private Quaternion _itemOriginalPos;
-    
+    public GameObject firstText;
+    public EyeLidManager eyeLidManager;
     private void Start()
     {
         currentMaxHint = photoMaxHintArray[GameManager.Instance.gameStage];
@@ -53,33 +54,61 @@ public class InspectObjectController : MonoBehaviour
                     
                     switch (itemName)
                     {
-                        case "cat":
+                        case "kedi":
                             dialogBoxes[0].SetActive(true);
                             break;
                         case "tren":
                             dialogBoxes[1].SetActive(true);
                             break;
                         case "mum":
+                            dialogBoxes[2].SetActive(true);
                             break;
                         case "ayi":
+                            dialogBoxes[11].SetActive(true);
+
                             break;
                         case "mektup":
+                            dialogBoxes[5].SetActive(true);
+
                             break;
                         case "kartpostal":
+                            dialogBoxes[3].SetActive(true);
+
                             break;
                         case "takvim0":
+                            dialogBoxes[4].SetActive(true);
+
                             break;
                         case "takvim1":
+                            dialogBoxes[8].SetActive(true);
+
                             break;
                         case "takvim2":
+                            dialogBoxes[13].SetActive(true);
+
                             break;
                         case "telefon":
+                            dialogBoxes[6].SetActive(true);
+
                             break;
-                        case "pasta":
+                        case "cake":
+                            dialogBoxes[12].SetActive(true);
+
                             break;
-                        case "kapi":
+                        case "kapi1":
+                            dialogBoxes[7].SetActive(true);
+
                             _AudioSource.PlayOneShot(_aaaaaa);
                             onInspect = false;
+                            break;
+                        case "kapi":
+                            dialogBoxes[10].SetActive(true);
+                            _AudioSource.PlayOneShot(_aaaaaa);
+                            onInspect = false;
+                            break;
+
+                        case "vazo":
+                            dialogBoxes[9].SetActive(true);
                             break;
                     }
 
@@ -89,8 +118,10 @@ public class InspectObjectController : MonoBehaviour
                         //arttır
                         currentFindedHit++;
                         FireManager.Instance.ChangeFireAmount(currentFindedHit/currentMaxHint);
+
                         cameraLensFilterScript.DarkenScreen();
                         PlayerPrefs.SetInt(itemName, 1);
+                        StartCoroutine(GoToMain());
                     }
 
                     if (!_hit.transform.name.Equals("kapi"))
@@ -137,5 +168,11 @@ public class InspectObjectController : MonoBehaviour
             _fpsController.enabled = true;
             inspectOutText.SetActive(false);
         }
+    }
+
+    public IEnumerator GoToMain()
+    {
+        yield return new WaitForSeconds(1);
+        eyeLidManager.EyeCloseMove();
     }
 }

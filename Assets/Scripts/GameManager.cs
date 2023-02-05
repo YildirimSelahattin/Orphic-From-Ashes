@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     public int gameStage =1;
     public static GameManager Instance;
+    public GameObject[] dialogs;
     void Awake()
     {
 
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this); ;
         }
+        
         
     }
 
